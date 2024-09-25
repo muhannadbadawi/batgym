@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BATGYM</title>
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-box">
+        <h2>Login</h2>
+        <form>
+          <div class="input-container">
+            <input type="text" placeholder="Username" required>
+          </div>
+          <div class="input-container">
+            <input type="password" placeholder="Password" required>
+          </div>
+          <button type="submit">Login</button>
+          <div class="create-account">
+            <p>Don't have an account? <a href="/create-account">Create Account</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+      import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+  
+      const firebaseConfig = {
+        apiKey: "AIzaSyDbFi1xf1EZH-y3AX3eLefYbqst4xrn18M",
+        authDomain: "batgym-b3f7f.firebaseapp.com",
+        projectId: "batgym-b3f7f",
+        storageBucket: "batgym-b3f7f.appspot.com",
+        messagingSenderId: "1088885143273",
+        appId: "1:1088885143273:web:49c9afcbc20de6f8b8a278",
+        measurementId: "G-82W6GLWLCT"
+      };
+  
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth();
+  
+      document.querySelector('form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+  
+        const email = e.target[0].value;
+        const password = e.target[1].value;
+  
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          console.log('Logged in:', user);
+        } catch (error) {
+          console.error('Error logging in:', error);
+          alert('Failed to login. Check your credentials.');
+        }
+      });
+    </script>
+  </body>
+</html>
